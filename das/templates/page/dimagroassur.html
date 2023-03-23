@@ -18,6 +18,17 @@
 
                      <div class="col-sm-11">
                         <div class="form-group">
+                           <label>Code Commune</label>
+                           {{ form.codeCommune }}</div>
+                     </div>
+                     <div class="col-sm-11">
+                        <div class="form-group">
+                           <label>Nom Commune</label>
+                           {{ form.nomCommune }}</div>
+                     </div>
+               
+                     <div class="col-sm-11">
+                        <div class="form-group">
                            <label>Offreurs d’assurance</label>
                            {{ form.OffreuAssurance }}</div>
                      </div>
@@ -25,6 +36,11 @@
                         <div class="form-group">
                            <label>Type d’assurance</label>
                            {{ form.TypeAssurance }}</div>
+                     </div>
+                     <div class="col-sm-11">
+                        <div class="form-group">
+                           <label>Nombre Souscription</label>
+                           {{ form.NbrSouscript}}</div>
                      </div>
                      <div class="col-sm-11">
                         <div class="form-group">
@@ -37,7 +53,19 @@
                            {{ form.NivPrime }}
                           </div>
                      </div>
-                  
+                     <div class="col-sm-11">
+                        <div class="form-group">
+ 
+                           <label>Date Début</label>
+                           {{ form.date_en}}
+                          </div>
+                     </div>
+                     <div class="col-sm-11">
+                        <div class="form-group">
+                           <label>Date de Modification</label>
+                           {{ form.date_modification }}
+                          </div>
+                     </div>
                  
                    </div>
                   
@@ -67,11 +95,15 @@
                      <thead>
                         <tr>
                            <th>ID</th>
+                           <th>Code Commune</th>
+                           <th>Nom Commune</th>
                            <th>Offreurs d’assurance</th>
                            <th>Type d’assurance</th>
+                           <th>Nombre Souscription</th>
                            <th>Culture assurée</th>
                            <th>Niveau des primes</th>
-                           
+                           <th>Date Début</th>
+                           <th>Date de Modification</th>
                            <th class="text-right">Action</th>
                         </tr>
                      </thead>
@@ -80,13 +112,17 @@
                         <tr>
                          
                            <td>{{ stud.id }}</td>
+                           <td>{{ stud.codeCommune }}</td>
+                           <td>{{ stud.nomCommune }}</td>
                            <td>{{ stud.OffreuAssurance }}</td>
-
+                           <td>{{ stud.NbrSouscript }}</td>
                            <td>{{ stud.TypeAssurance }}</td>
 
                            <td>{{ stud.CulturAssure }}</td>
 
                            <td>{{ stud.NivPrime }}</td>
+                           <td>{{ stud.date_en }}</td>
+                           <td>{{ stud.date_modification }}</td>
                            <td class="text-right">
                               <div class="actions">
                                  <a href="{% url 'das:update_ass' stud.id %}" class="btn btn-sm bg-success-light mr-2">
@@ -106,8 +142,7 @@
          </div>
       </div>
    </div>
-</div>
-   </div>
+
    
 </div>
 {% endblock %}	

@@ -15,11 +15,15 @@
                      </div>
 
                      {% include 'includes/messages.html' %}	
-
                      <div class="col-sm-11">
                         <div class="form-group">
-                           <label>Prod Vente Specul </label>
-                           {{ form.ProdVenteSpecul }}</div>
+                           <label>Code Commune</label>
+                           {{ form.codeCommune }}</div>
+                     </div>
+                     <div class="col-sm-11">
+                        <div class="form-group">
+                           <label>Nom Commune</label>
+                           {{ form.nomCommune }}</div>
                      </div>
                      <div class="col-sm-11">
                         <div class="form-group">
@@ -28,13 +32,42 @@
                      </div>
                      <div class="col-sm-11">
                         <div class="form-group">
+                           <label>Prod Vente Specul </label>
+                           {{ form.ProdVenteSpecul }}</div>
+                     </div>
+                     <div class="col-sm-11">
+                        <div class="form-group">
+                           <label>Prix Vent Moy /Saison</label>
+                           {{ form.PrixVentMoySaison}} </div>
+                     </div>
+                     <div class="col-sm-11">
+                        <div class="form-group">
+                           <label>Mode Ecoulement</label>
+                           {{ form.ModEcoulement }} </div>
+                     </div>
+                     <div class="col-sm-11">
+                        <div class="form-group">
                            <label>Marchée Regroupement</label>
                            {{ form.MarchRegroupement }} </div>
                      </div>
                    <div class="col-sm-11">
                         <div class="form-group">
-                           <label>Marchée Regroupement</label>
+                           <label>Client Agrot</label>
                            {{ form.ClientAgro }}
+                          </div>
+                     </div>
+                     
+                     <div class="col-sm-11">
+                        <div class="form-group">
+ 
+                           <label>Date Début</label>
+                           {{ form.date_en}}
+                          </div>
+                     </div>
+                     <div class="col-sm-11">
+                        <div class="form-group">
+                           <label>Date de Modification</label>
+                           {{ form.date_modification }}
                           </div>
                      </div>
                   
@@ -67,10 +100,16 @@
                      <thead>
                         <tr>
                            <th>ID</th>
-                           <th>Prod Vente Specul</th>
-                           <th>Type Vente</th>
-                           <th>Culture assurée</th>
-                           <th>Niveau des primes</th>
+                           <th>codeCommune</th>
+                           <th>nomCommune </th>
+                           <th>TypeVente </th>
+                           <th>ProdVenteSpecul </th>
+                           <th>PrixVentMoySaison</th>
+                           <th>ModEcoulement </th>
+                           <th>MarchRegroupement</th>
+                           <th>ClientAgro </th>
+                           <th>date_en</th>
+                           <th>Date de Modification</th>
                            
                            <th class="text-right">Action</th>
                         </tr>
@@ -80,13 +119,16 @@
                         <tr>
                          
                            <td>{{ stud.id }}</td>
-                           <td>{{ stud.ProdVenteSpecul }}</td>
-
+                           <td>{{ stud.codeCommune }}</td>
+                           <td>{{ stud.nomCommune }}</td>
                            <td>{{ stud.TypeVente }}</td>
-
+                           <td>{{ stud.ProdVenteSpecul }}</td>
+                           <td>{{ stud.PrixVentMoySaison }}</td>
+                           <td>{{ stud.ModEcoulement }}</td>
                            <td>{{ stud.MarchRegroupement }}</td>
-
-                           <td>{{ stud.ClientAgro  }}</td>
+                           <td>{{ stud.ClientAgro }}</td>
+                           <td>{{ stud.date_en }}</td>
+                           <td>{{ stud.date_modification }}</td>
                            <td class="text-right">
                               <div class="actions">
                                  <a href="{% url 'das:update_come' stud.id %}" class="btn btn-sm bg-success-light mr-2">
@@ -106,8 +148,7 @@
          </div>
       </div>
    </div>
-</div>
-   </div>
+
    
 </div>
 {% endblock %}	

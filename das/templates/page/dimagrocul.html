@@ -15,132 +15,91 @@
                <form method="POST" action="{% url 'das:dimagrocul' %}" enctype="multipart/form-data">
                   {% csrf_token %}
                  
-                  <div class="row">
-                     <div class="col-md-6">
-                        
-                        <div class="form-group">
-                           <label>Zone de production/culture:</label>
-                           {{ form.ZonProd_Cult }}
-                        </div>
-                        <div class="form-group">
-                           <label>Cultures pratiquées:</label>
-                           {{ form.Cultur_Pratique  }}
-                        </div>
-                        <div class="form-group">
-                           <label>Types de semences:</label>
-                           {{ form.Type_Semence }}
-                        </div>
-                        <div class="form-group">
-                          <label>Types culture Pratique:</label>
-                          {{ form.Type_Culture_Pratique }}
-                       </div>
-                        <div class="form-group">
-                           <label>Variétés cultivées:</label>
-                           {{ form.VarieteCultive }}
-                        </div>
-                        <div class="form-group">
-                           <label>Sources d’approvisionnement des intrants:</label>
-                           {{ form.SourcApprovisIntran }}
-                        </div>
-                        <div class="form-group">
-                           <label>Sources d’approvisionnement en semences:</label>
-                           {{ form.SourcApprovisSemenc }}
-                        </div>
-                     </div>
-                     <div class="col-md-6">
-                        <div class="form-group">
-                           <label>Sources d’approvisionnement en engrais et produits:</label>
-                           {{ form.SourcApprovisEngrProdPhyto  }}
-                        </div>
-                        <div class="form-group">
-                           <label>Approvisionnent en intrants et matériels agricoles:</label>
-                           {{ form.SourcApprovisMatAgro }}
-                        </div>
-                        <div class="form-group">
-                           <label>Type d’acquisition intrants:</label>
-                           {{ form.TypeAcquisIntran }}</div>
-                        <div class="form-group">
-                           <label>Type d’acquisition matériels:</label>
-                           {{ form.TypeAcquisMat }}
-                        </div>
-                        <div class="form-group">
-                           <label>Type de fertilisants utilisés:</label>
-                           {{ form.TypeFertilisUtil }}
-                        </div>
-                        <div class="form-group">
-                           <label>Type de pesticides utilisés:</label>
-                           {{ form.TypePesticidUtil }}
-                        </div>
-                        <div class="form-group">
-                          <label>mode parcelle aquis:</label>
-                          {{ form.ModAcquisParcel}}
-                       </div>
-                  </div>
+                   {% csrf_token %}
+              
+                  {{ form.as_p }}
+                     
+                   
+                  
                   <div class="text-right">
-                     <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
+                     <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                     </div>
+
                </form>
             </div>
          </div>
       </div>
-   </div>
-   
-</div>
-
-
-     
+      
 <div >
-  <div class="content container-fluid">
-    <div class="page-header">
-       <div class="row align-items-center">
-          
+ <div class="content container-fluid">
+   <div class="page-header">
+      <div class="row align-items-center">
          
-       </div>
-    </div>
-    {% include 'includes/messages.html' %}
-    <div class="row">
-       <div class="col-sm-12">
-          <div class="card card-table">
-             <div class="card-body">
-                <div class="table-responsive">
-                   <table id="table_id" class="table table-hover table-center mb-0">
-                      <thead>
-                         <tr>
+        
+      </div>
+   </div>
+   {% include 'includes/messages.html' %}
+   <div class="row">
+      <div class="col-sm-12">
+         <div class="card card-table">
+            <div class="card-body">
+               <div class="table-responsive">
+                  <table id="table_id" class="table table-hover table-center mb-0">
+                     <thead>
+                        <tr>
                             <th>ID</th>
-                            <th>Zone de production</th>
-                            <th>Cultures pratiquées</th>
-                            <th>Types de semences</th>
-                            <th>Types culture Pratique</th>
-                            <th>Variétés cultivées</th>
-                            <th>Sources d’approvisionnement des intrants</th>
-                            <th>Sources d’approvisionnement en semences</th>
-                            <th>Sources d’approvisionnement en engrais et produits</th>
-                            <th>Approvisionnent en intrants et matériels agricoles</th>
-                            <th>Type d’acquisition intrants</th>
-                            <th>Type d’acquisition matériels</th>
-                            <th>Type de fertilisants utilisés</th>
-                            <th>Type de pesticides utilisés</th>
-                            <th>mode parcelle aquis</th>
-                           <th class="text-right">Action</th>
-                         </tr>
+                            <th>Code Commune</th>
+
+                            <th>Nom Commune</th>
+                            <th>ZonProd_Cult</th>
+
+                            <th>Cultur_Pratique</th>
+
+                            <th>Type_Semence </th>
+                            <th>Type_Culture_Pratique </th>
+
+                           
+                              <th>VarieteCultive </th>
+                           
+                            <th>SourcApprovisIntran </th>
+                             <th>SourcApprovisSemenc </th>
+                             <th>SourcApprovisEngrProdPhyto </th>
+                             <th>SourcApprovisMatAgro </th>
+
+                            <th>TypeAcquisIntran </th>
+                            <th>TypeAcquisMat </th>
+
+                            <th>TypeFertilisUtil </th>
+
+                            <th>TypePesticidUtil </th>
+                            <th>ModAcquisParcel </th> 
+                            <th>date_en </th>
+                            <th>date de Modification </th>
+                            <th class="text-right">Action</th>
+                        </tr>
                       </thead>
                       <tbody>
                         {% for stud in dataOb %}
                          <tr>
-                          
+                     
                             <td>{{ stud.id }}</td>
+                            <td>{{stud.codeCommune}}</td>
+
+                            <td>{{stud.nomCommune}}</td>
                             <td>{{stud.ZonProd_Cult}}</td>
 
                             <td>{{stud.Cultur_Pratique}}</td>
 
                             <td>{{ stud.Type_Semence }}</td>
                             <td>{{ stud.Type_Culture_Pratique }}</td>
-
-                            <td>{{ stud.CodeVarietesCultiv }}</td>
+                                           
+                          
                               <td>{{ stud.VarieteCultive }}</td>
-                            <td>{{ stud.Appro_Intrant_mat }}</td>
+                           
                             <td>{{ stud.SourcApprovisIntran }}</td>
                              <td>{{ stud.SourcApprovisSemenc }}</td>
+                      
                              <td>{{ stud.SourcApprovisEngrProdPhyto }}</td>
                              <td>{{ stud.SourcApprovisMatAgro }}</td>
 
@@ -148,30 +107,32 @@
                             <td>{{ stud.TypeAcquisMat }}</td>
 
                             <td>{{ stud.TypeFertilisUtil }}</td>
+                          
 
                             <td>{{ stud.TypePesticidUtil }}</td>
                             <td>{{ stud.ModAcquisParcel }}</td> 
+                            <td>{{ stud.date_en }}</td>
+                            <td>{{ stud.date_modification }}</td>
+                          
                             <td class="text-right">
                                <div class="actions">
                                   <a href="{% url 'das:update_agcl' stud.id %}" class="btn btn-sm bg-success-light mr-2">
                                   <i class="fas fa-pen"></i>
                                   </a>
                                   <a href="{% url 'das:delete_clt' stud.id %}" class="btn btn-sm bg-danger-light">
-                                  <i class="fas fa-trash"></i>
-                                  </a>
-                               </div>
-                            </td>
-                         </tr>
-                         {% endfor %}
-                      </tbody>
-                   </table>
-                </div>
-             </div>
-          </div>
-       </div>
-    </div>
- </div>
-    </div>
-    
- </div>
+                                  <i class="fas fa-trash"></i></a>
+                              </div>
+                           </td>
+                        </tr>
+                        {% endfor %}
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   
+</div>
  {% endblock %}	

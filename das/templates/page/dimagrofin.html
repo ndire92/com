@@ -15,7 +15,16 @@
                      </div>
 
                      {% include 'includes/messages.html' %}	
-
+                     <div class="col-sm-11">
+                     <div class="form-group">
+                        <label>Code Commune</label>
+                        {{ form.codeCommune }}</div>
+                  </div>
+                  <div class="col-sm-11">
+                     <div class="form-group">
+                        <label>Nom Commune</label>
+                        {{ form.nomCommune }}</div>
+                  </div>
                      <div class="col-sm-11">
                         <div class="form-group">
                            <label>Offreus de Services financiers</label</label>
@@ -38,12 +47,37 @@
                           </div>
                      </div>
                      <div class="col-sm-11">
+                        <div class="form-group">
+                           <label>Montant Moy type culture</label>
+                           {{ form.MontMoyTypeCultur}}
+                          </div>
+                     </div>
+                     <div class="col-sm-11">
+                        <div class="form-group">
+                           <label>Taux Interet</label>
+                           {{ form.TauxInteret }}
+                          </div>
+                     </div>
+                     <div class="col-sm-11">
                       <div class="form-group">
                          <label>Délai de remboursement</label>
                          {{ form.DelaiRembourse }}
                         </div>
                    </div>
                   
+                   <div class="col-sm-11">
+                     <div class="form-group">
+
+                        <label>Date Début</label>
+                        {{ form.date_en}}
+                       </div>
+                  </div>
+                  <div class="col-sm-11">
+                     <div class="form-group">
+                        <label>Date de Modification</label>
+                        {{ form.date_modification }}
+                       </div>
+                  </div>
                  
                    </div>
                   
@@ -75,11 +109,20 @@
                      <thead>
                         <tr>
                            <th>ID</th>
+                           <th>Code Commune</th>
+
+                            <th>Nom Commune</th>
                            <th>Offres de Services financiers</th>
                            <th>Demande d’apport</th>
                            <th>Types de garantie exigés</th>
                            <th>Longueur de la procédure de crédit</th>
-                           <th>Délai de remboursement</th>
+                           <th>Montant Moy type culture</th>
+                           <th>Taux Interet </th>
+                           <th>Délai de remboursement</th>   
+                           
+                           <th>date_en </th>
+                           <th>date de Modification </th>
+
                            
                            <th class="text-right">Action</th>
                         </tr>
@@ -87,9 +130,9 @@
                      <tbody>
                         {% for stud in dataObject %}
                         <tr>
-                         
                            <td>{{ stud.id }}</td>
-                           <td>{{ stud.id }}</td>
+                           <td>{{ stud.codeCommune }}</td>
+                           <td>{{ stud.nomCommune }}</td>
                            <td>{{ stud.OffreServicFinance }}</td>
 
                            <td>{{ stud.DemandApport }}</td>
@@ -97,7 +140,11 @@
                            <td>{{ stud.TypeGaranExige }}</td>
 
                            <td>{{ stud.LongProcedCredi }}</td>
+                           <td>{{ stud.MontMoyTypeCultur }}</td>
+                           <td>{{ stud.TauxInteret }}</td>
                             <td>{{ stud.DelaiRembourse }}</td>
+                            <td>{{ stud.date_en }}</td>
+                            <td>{{ stud.date_modification }}</td>
                            <td class="text-right">
                               <div class="actions">
                                  <a href="{% url 'das:update_fi' stud.id %}" class="btn btn-sm bg-success-light mr-2">
@@ -117,8 +164,7 @@
          </div>
       </div>
    </div>
-</div>
-   </div>
+
    
 </div>
 {% endblock %}	

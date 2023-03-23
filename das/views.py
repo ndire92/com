@@ -1,9 +1,9 @@
-from django.shortcuts import render ,redirect
+from django.shortcuts import render, redirect
 from das.dimagroprod import DimAgroprd
 from das.dimagrofi import DimAgrofinf
 from das.dimaroassur import DimAgroAssurancef
 from das.dimcom import AgroCommercial
-from das.multistepformexample import MultiForm
+
 from django.core.paginator import Paginator
 from das.dimagroorg import DimAgroorg
 from django.http import HttpResponseRedirect
@@ -14,60 +14,60 @@ from app.models import CustomUser
 from django.contrib import messages
 
 
-from das.models import DimAgroAssurance, DimAgroCommercial,DimAgroCulture,DimAgroFinance,DimAgroOrganisation,DimAgroProduction,MultiStepFormModel
+from das.models import DimAgroAssurance, DimAgroCommercial, DimAgroCulture, DimAgroFinance, DimAgroOrganisation, DimAgroProduction
 
 
 # Create your views here.
 
 
-
-
 def dimagr(request,):
 
-    return render(request,'page/Dimassu.html')
+    return render(request, 'page/Dimassu.html')
+
 
 def agro_assu_form(request):
-    
+
     if request.method == 'POST':
         form = DimAgroAssurancef(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, " Are Successfully Added !")
-         
+
             return redirect('/das/dimagroassu/')
     else:
         form = DimAgroAssurancef()
-    return render(request , 'page/dimagroassur.html', {'form' : form, 'dataObject':DimAgroAssurance.objects.all()})
+    return render(request, 'page/dimagroassur.html', {'form': form, 'dataObject': DimAgroAssurance.objects.all()})
 
-#update
-def update_a(request,id):
-    dataObject =  DimAgroAssurance.objects.get(id=id)
-    form=DimAgroAssurancef(instance=dataObject)
+# update
+
+
+def update_a(request, id):
+    dataObject = DimAgroAssurance.objects.get(id=id)
+    form = DimAgroAssurancef(instance=dataObject)
     if request.method == 'POST':
-        form = DimAgroAssurancef(request.POST,instance=dataObject)
+        form = DimAgroAssurancef(request.POST, instance=dataObject)
         if form.is_valid():
             form.save()
-            messages.success(request,' succefully ')
+            messages.success(request, ' succefully ')
             return redirect('/das/dimagroassu/')
 
     context = {
 
-    'form': form,
+        'form': form,
 
     }
-    return render(request,'page/dimagroassur.html',context)
+    return render(request, 'page/dimagroassur.html', context)
 
 
-def delete_post(request,id):
-    dataObject =  DimAgroAssurance.objects.get(id=id)
+def delete_post(request, id):
+    dataObject = DimAgroAssurance.objects.get(id=id)
     if request.method == 'POST':
         dataObject.delete()
         return redirect('/das/dimagroassu/')
     context = {
 
-    'item': dataObject,}
-    return render(request,'page/delete.html',context)
-
+        'item': dataObject, }
+    return render(request, 'page/delete.html', context)
 
 
 def dimagrocul_form(request):
@@ -80,16 +80,15 @@ def dimagrocul_form(request):
     else:
         form = DimAgrocultf()
 
-    return render(request , 'page/dimagrocul.html', {'form' : form, 'dataOb': DimAgroCulture.objects.all()})
+    return render(request, 'page/dimagrocul.html', {'form': form, 'dataOb': DimAgroCulture.objects.all()})
 
 
-
-#update agrocul
-def update_c(request,id):
-    dataObject =  DimAgroCulture.objects.get(id=id)
-    form=DimAgrocultf(instance=dataObject)
+# update agrocul
+def update_c(request, id):
+    dataObject = DimAgroCulture.objects.get(id=id)
+    form = DimAgrocultf(instance=dataObject)
     if request.method == 'POST':
-        form = DimAgrocultf(request.POST,instance=dataObject)
+        form = DimAgrocultf(request.POST, instance=dataObject)
         if form.is_valid():
             form.save()
             messages.success(request, " Are Successfully Added !")
@@ -97,26 +96,21 @@ def update_c(request,id):
 
     context = {
 
-    'form': form,
+        'form': form,
 
     }
-    return render(request,'page/dimagrocul.html',context)
+    return render(request, 'page/dimagrocul.html', context)
 
 
-def delete_d(request,id):
-    dataObject =  DimAgroCulture.objects.get(id=id)
+def delete_d(request, id):
+    dataObject = DimAgroCulture.objects.get(id=id)
     if request.method == 'POST':
         dataObject.delete()
         return redirect('/das/dimagrocul/')
     context = {
 
-    'item': dataObject,}
-    return render(request,'page/delete_c.html',context)
-
-
-
-
-
+        'item': dataObject, }
+    return render(request, 'page/delete_c.html', context)
 
 
 def dimagrofin_form(request):
@@ -124,45 +118,44 @@ def dimagrofin_form(request):
         form = DimAgrofinf(request.POST)
         if form.is_valid():
             form.save()
-            
+
             messages.success(request, " Are Successfully Added !")
             return redirect('/das/dimagrofin/')
     else:
         form = DimAgrofinf()
 
+    return render(request, 'page/dimagrofin.html', {'form': form, 'dataObject': DimAgroFinance.objects.all()})
 
-    return render(request , 'page/dimagrofin.html', {'form' : form, 'dataObject': DimAgroFinance.objects.all()})
 
-
-#update fina
-def update_f(request,id):
-    dataObject =  DimAgroFinance.objects.get(id=id)
-    form=DimAgrofinf(instance=dataObject)
+# update fina
+def update_f(request, id):
+    dataObject = DimAgroFinance.objects.get(id=id)
+    form = DimAgrofinf(instance=dataObject)
     if request.method == 'POST':
-        form = DimAgrofinf(request.POST,instance=dataObject)
+        form = DimAgrofinf(request.POST, instance=dataObject)
         if form.is_valid():
             form.save()
-            
+
             messages.success(request, " Are Successfully Added !")
             return redirect('/das/dimagrofin/')
 
     context = {
 
-    'form': form,
+        'form': form,
 
     }
-    return render(request,'page/dimagrofin.html',context)
+    return render(request, 'page/dimagrofin.html', context)
 
 
-def delete_f(request,id):
-    dataObject =DimAgroFinance.objects.get(id=id)
+def delete_f(request, id):
+    dataObject = DimAgroFinance.objects.get(id=id)
     if request.method == 'POST':
         dataObject.delete()
         return redirect('/das/dimagrofin/')
     context = {
 
-    'item': dataObject,}
-    return render(request,'page/delete_fi.html',context)
+        'item': dataObject, }
+    return render(request, 'page/delete_fi.html', context)
 
 
 def dimagroorg_form(request):
@@ -170,47 +163,44 @@ def dimagroorg_form(request):
         form = DimAgroorg(request.POST)
         if form.is_valid():
             form.save()
-            
+
             messages.success(request, " Are Successfully Added !")
             return redirect('/das/dimagroog/')
     else:
         form = DimAgroorg()
 
+    return render(request, 'page/dimagroorg.html', {'form': form, 'dataObject': DimAgroOrganisation.objects.all()})
 
-    return render(request , 'page/dimagroorg.html', {'form' : form, 'dataObject': DimAgroOrganisation.objects.all()})
 
-
-#update agroorg
-def update_or(request,id):
+# update agroorg
+def update_or(request, id):
     dataObject = DimAgroOrganisation.objects.get(id=id)
-    form=DimAgroorg(instance=dataObject)
+    form = DimAgroorg(instance=dataObject)
     if request.method == 'POST':
-        form = DimAgroorg(request.POST,instance=dataObject)
+        form = DimAgroorg(request.POST, instance=dataObject)
         if form.is_valid():
             form.save()
-            
+
             messages.success(request, " Are Successfully Added !")
             return redirect('/das/dimagroog/')
 
     context = {
 
-    'form': form,
+        'form': form,
 
     }
-    return render(request,'page/dimagroorg.html',context)
+    return render(request, 'page/dimagroorg.html', context)
 
 
-def delete_or(request,id):
-    dataObject =DimAgroOrganisation.objects.get(id=id)
+def delete_or(request, id):
+    dataObject = DimAgroOrganisation.objects.get(id=id)
     if request.method == 'POST':
         dataObject.delete()
         return redirect('/das/dimagrofin/')
     context = {
 
-    'item': dataObject,}
-    return render(request,'page/delete_org.html',context)
-
-
+        'item': dataObject, }
+    return render(request, 'page/delete_org.html', context)
 
 
 def dimagrprod_form(request):
@@ -218,81 +208,45 @@ def dimagrprod_form(request):
         form = DimAgroprd(request.POST)
         if form.is_valid():
             form.save()
-            
+
             messages.success(request, " Are Successfully Added !")
             return redirect('/das/dimagroprod/')
     else:
         form = DimAgroprd()
 
-
-    return render(request , 'page/dimagroprod.html', {'form' : form, 'dataObject': DimAgroProduction.objects.all()})
-
+    return render(request, 'page/dimagroprod.html', {'form': form, 'dataObject': DimAgroProduction.objects.all()})
 
 
-
-
-#update prod
-def update_prd(request,id):
+# update prod
+def update_prd(request, id):
     dataObject = DimAgroProduction.objects.get(id=id)
-    form=DimAgroprd(instance=dataObject)
+    form = DimAgroprd(instance=dataObject)
     if request.method == 'POST':
-        form = DimAgroprd(request.POST,instance=dataObject)
+        form = DimAgroprd(request.POST, instance=dataObject)
         if form.is_valid():
             form.save()
-            
+
             messages.success(request, " Are Successfully Added !")
             return redirect('/das/dimagroprod/')
 
     context = {
 
-    'form': form,
+        'form': form,
 
     }
-    return render(request,'page/dimagroprod.html',context)
+    return render(request, 'page/dimagroprod.html', context)
 
 
-def delete_prd(request,id):
-    dataObject =DimAgroProduction.objects.get(id=id)
+def delete_prd(request, id):
+    dataObject = DimAgroProduction.objects.get(id=id)
     if request.method == 'POST':
         dataObject.delete()
         return redirect('/das/dimagroprod/')
     context = {
 
-    'item': dataObject,}
-    return render(request,'page/delete_prd.html',context)
+        'item': dataObject, }
+    return render(request, 'page/delete_prd.html', context)
 
-
-def multistepformexample(request):
-    
-    if request.method == 'POST':
-        form = MultiForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('multistepformexample')
-    
-    else:
-        form =MultiForm()
-        
-    
-    return render(request ,'Hod/multistepformexample.html', {'form': form, 'dataObject': MultiStepFormModel.objects.all()})
-
-        
-
-  
-
-
-def multistepformexample_save(request):
-    if request.method == 'POST':
-        form = MultiForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('multistepformexample')
-    
-    else:
-        form =MultiForm()
-        
-    
-    return render(request ,'Hod/multistepformexample.html', {'form': form, 'dataObject': MultiStepFormModel.objects.all()})
 
 def AgroCm(request):
     if request.method == 'POST':
@@ -304,42 +258,36 @@ def AgroCm(request):
     else:
         form = AgroCommercial()
 
-    return render(request , 'page/dimcom.html', {'form' : form, 'dataObject': DimAgroCommercial.objects.all()})
+    return render(request, 'page/dimcom.html', {'form': form, 'dataObject': DimAgroCommercial.objects.all()})
 
 
+# update prod
 
-
-
-#update prod
-def update_com(request,id):
+def update_com(request, id):
     dataObject = DimAgroCommercial.objects.get(id=id)
-    form=AgroCommercial(instance=dataObject)
+    form = AgroCommercial(instance=dataObject)
     if request.method == 'POST':
-        form = AgroCommercial(request.POST,instance=dataObject)
+        form = AgroCommercial(request.POST, instance=dataObject)
         if form.is_valid():
             form.save()
-            
+
             messages.success(request, " Are Successfully Added !")
             return redirect('/das/dimcom/')
 
     context = {
 
-    'form': form,
+        'form': form,
 
     }
-    return render(request,'page/dimcom.html',context)
+    return render(request, 'page/dimcom.html', context)
 
 
-def delete_com(request,id):
-    dataObject =DimAgroCommercial.objects.get(id=id)
+def delete_com(request, id):
+    dataObject = DimAgroCommercial.objects.get(id=id)
     if request.method == 'POST':
         dataObject.delete()
         return redirect('/das/dimcom/')
     context = {
 
-    'item': dataObject,}
-    return render(request,'page/delete_prd.html',context)
-
-
-
-  
+        'item': dataObject, }
+    return render(request, 'page/delete_prd.html', context)

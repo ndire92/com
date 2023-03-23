@@ -1,3 +1,46 @@
-<footer>
-    <p>Copyright © 2020 Dreamguys.</p>
+{% load static %}
+<footer style="background-color: #000">
+    <div class="row">
+      
+       
+        <div class="col-xl-4 col-sm-6 col-12">
+           <div class="">
+            <a href="{% url 'home' %}" class="logo">
+                <img src=" {% static 'assets/img/logo_thies.png ' %}" alt="Logo">
+            </a>
+            <p style="color: #fff">Copyright © 2022<br> Precvadi ENSAIGT.</p>
+           </div>
+          
+        </div>
+        <div class="col-xl-4 col-sm-6 col-12">
+            <div  class="">
+               <p  style="color: #fff">Nombre de visiteur: {{ nb_visite}}</p><br><br>
+               <h6><p  style="color: #fff">Mairie de la Commune de Thiès</p></h6>
+               <p  style="color: #fff">Adresse:115, Place de France –DVF</p>
+               <p  style="color: #fff">Boîte postale:BP 167</p>
+               <p  style="color: #fff">Fax:33 951 47 74</p>
+            
+               <p  style="color: #fff"><i class="fa-regular fa-envelope"></i> &nbsp;&nbsp;comthies@sentoo.sn</p>
+               
+               <p  style="color: #fff"><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;+221 33 951 12 91</p>
+               <p  style="color: #fff">Site web:http://www.mairie-thies.sn/</p>
+            </div>
+         </div>
+        <div class="col-xl-4 col-sm-6 col-12">
+           <div class="">
+            <div class="column">
+                <h3  style="color: #fff">Suivez-nous</h3>
+                <ul style="color: #fff">
+                  <li ><a href="#" style="color: #fff">Facebook</a></li>
+                  <li ><a href="#" style="color: #fff">Twitter</a></li>
+                  <li ><a href="#" style="color: #fff">Instagram</a></li>
+                </ul>
+              </div>
+        </div>
+     </div>
+      
+
+   
+  </div>
+ 
 </footer>

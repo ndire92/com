@@ -18,10 +18,15 @@
 
                      
                      <div class="col-sm-11">
-                        <div class="form-group">
-                           <label>Nom Organisation</label>
-                           {{ form.name_Organisation }}</div>
-                     </div>
+                     <div class="form-group">
+                        <label>Code Commune</label>
+                        {{ form.codeCommune }}</div>
+                  </div>
+                  <div class="col-sm-11">
+                     <div class="form-group">
+                        <label>Nom Commune</label>
+                        {{ form.nomCommune }}</div>
+                  </div>
                      <div class="col-sm-11">
                         <div class="form-group">
                            <label>Type service Offert</label>
@@ -55,6 +60,19 @@
                         </div>
                    </div>
                  
+                   <div class="col-sm-11">
+                     <div class="form-group">
+
+                        <label>Date Début</label>
+                        {{ form.date_en}}
+                       </div>
+                  </div>
+                  <div class="col-sm-11">
+                     <div class="form-group">
+                        <label>Date de Modification</label>
+                        {{ form.date_modification }}
+                       </div>
+                  </div>
                    </div>
                   
                    <br>
@@ -83,13 +101,17 @@
                      <thead>
                         <tr>
                            <th>ID</th>
-                           <th>Nom Organisation</th>
+                           <th>Code Commune</th>
+
+                           <th>Nom Commune</th>
                            <th>Type service Offert</th>
                            <th>Besion Formation</th>
                            <th>Contrain global Agro</th>
                            <th>Contraine Filier</th>
                            <th>Infra stock cod</th>
                            <th>Fournisseur Embll</th>
+                           <th>Date Début</th>
+                           <th>Date de Modification</th>
                            
                            <th class="text-right">Action</th>
                         </tr>
@@ -99,7 +121,10 @@
                         <tr>
                          
                            <td>{{ stud.id }}</td>
-                           <td>{{ stud.name_Organisation }}</td>
+                           <td>{{stud.codeCommune}}</td>
+
+                           <td>{{stud.nomCommune}}</td>
+                         
 
                            <td>{{ stud.TypeServicOfferOP}}</td>
 
@@ -111,6 +136,8 @@
                            <td>{{ stud.InfrasStockCondition}}</td>
 
                            <td>{{ stud.FournisEmballag }}</td>
+                           <td>{{ stud.date_en }}</td>
+                           <td>{{ stud.date_modification }}</td>
 
                           
                            <td class="text-right">
@@ -132,8 +159,7 @@
          </div>
       </div>
    </div>
-</div>
-   </div>
+
    
 </div>
 {% endblock %}	

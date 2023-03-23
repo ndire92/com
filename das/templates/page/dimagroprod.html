@@ -19,14 +19,50 @@
                      
                      <div class="col-sm-11">
                         <div class="form-group">
-                           <label>Nom Production</label>
-                           {{ form.name_Production }}</div>
+                           <label>Code Commune</label>
+                           {{ form.codeCommune }}</div>
+                     </div>
+                     <div class="col-sm-11">
+                        <div class="form-group">
+                           <label>Nom Commune</label>
+                           {{ form.nomCommune }}</div>
                      </div>
                      <div class="col-sm-11">
                         <div class="form-group">
                            <label>Code culture</label>
-                           {{ form.CodeCulture }} </div>
+                           {{ form.CodeCulture  }} </div>
                      </div>
+                     <div class="col-sm-11">
+                        <div class="form-group">
+                           <label>SupMaxDetenu</label>
+                           {{ form.SupMaxDetenu }} </div>
+                     </div>
+                     <div class="col-sm-11">
+                        <div class="form-group">
+                           <label>SupMaxDetenu </label>
+                           {{ form.SupMaxDetenu }}
+                          </div>
+                     </div>
+                     <div class="col-sm-11">
+                        <div class="form-group">
+                           <label>SupMoyDetenu</label>
+                           {{ form.SupMoyDetenu}}
+                          </div>
+                     </div>
+                     <div class="col-sm-11">
+                        <div class="form-group">
+                           <label>SupMinDetenu </label>
+                           {{ form.SupMinDetenu }}
+                          </div>
+                     </div>
+                    
+                     <div class="col-sm-11">
+                        <div class="form-group">
+                           <label>Type SupMoyEmblave</label>
+                           {{ form.SupMoyEmblave}}
+                          </div>
+                     </div>
+                    
                    <div class="col-sm-11">
                         <div class="form-group">
                            <label>Type Culture Pratiquer</label>
@@ -60,6 +96,20 @@
                          {{ form.CauseDegrad}}
                         </div>
                    </div>
+                   
+                   <div class="col-sm-11">
+                     <div class="form-group">
+
+                        <label>Date Début</label>
+                        {{ form.date_en}}
+                       </div>
+                  </div>
+                  <div class="col-sm-11">
+                     <div class="form-group">
+                        <label>Date de Modification</label>
+                        {{ form.date_modification }}
+                       </div>
+                  </div>
                  
                    </div>
                   
@@ -89,14 +139,22 @@
                      <thead>
                         <tr>
                            <th>ID</th>
-                           <th>Nom Production</th>
-                           <th>Code culture</th>
-                           <th>Type Cul Prati</th>
-                           <th>Rdement hecta/cul</th>
-                           <th>Taux Perte post Reco/cult</th>
-                           <th>Type Sol Existe</th>
-                           <th>Type Degradation</th>
-                           <th>Cause Degradation</th>
+                           <th>codeCommune</th>
+                           <th>nomCommune</th>
+                           <th>CodeCulture</th>
+                           <th>SupMaxDetenu </th>
+                           <th>SupMinDetenu </th>
+                           <th>SupMoyDetenu </th>
+                           <th>SupMoyEmblave</th>
+                           <th>type_cult_prat</th>
+                           <th>RendemHectarCult </th>
+                           <th>TauxPertPostRecoltParCult </th>
+                           <th>TypeSolExist</th>
+                           <th>TypeDegradZonCultur</th>
+                           <th>CauseDegrad</th>
+                           
+                           <th>date_en</th>
+                           <th>date_modification</th>
                            
                            <th class="text-right">Action</th>
                         </tr>
@@ -106,19 +164,21 @@
                         <tr>
                          
                            <td>{{ stud.id }}</td>
-                           <td>{{ stud.name_Production }}</td>
+                           <td>{{ stud.nomCommune }} </td>
+                           <td>{{ stud.CodeCulture }} </td>
+                           <td>{{ stud.SupMaxDetenu  }} </td>
+                           <td>{{ stud.SupMinDetenu  }} </td>
+                           <td>{{ stud.SupMoyDetenu  }} </td>
+                           <td>{{ stud.SupMoyEmblave }} </td>
+                           <td>{{ stud.type_cult_prat }} </td>
+                           <td>{{ stud.RendemHectarCult  }} </td>
+                           <td>{{ stud.TauxPertPostRecoltParCult  }} </td>
+                           <td>{{ stud.TypeSolExist }} </td>
+                           <td>{{ stud.TypeDegradZonCultur }} 
+                           <td>{{ stud.CauseDegrad }} </td>
 
-                           <td>{{ stud.CodeCulture}}</td>
-
-                           <td>{{ stud.type_cult_prat }}</td>
-
-                           <td>{{ stud.RendemHectarCult }}</td>
-                           <td>{{ stud.TauxPertPostRecoltParCult }}</td>
-
-                           <td>{{ stud.TypeSolExist}}</td>
-
-                           <td>{{ stud.TypeDegradZonCultur }}</td>
-                           <td>{{ stud.CauseDegrad  }}</td>
+                           <td>{{ stud.date_en }} </td>
+                           <td>{{ stud.date_modification }} </td>
                           
                            <td class="text-right">
                               <div class="actions">
@@ -139,8 +199,7 @@
          </div>
       </div>
    </div>
-</div>
-   </div>
+
    
 </div>
 {% endblock %}	

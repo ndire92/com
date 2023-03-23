@@ -28,8 +28,8 @@ urlpatterns = [
     path('delete_org/<int:id>/',views.delete_or,name='delete_org'),
     path('update_pr/<int:id>/',views.update_prd,name='update_pr'),
     path('delete_pr/<int:id>/',views.delete_prd,name='delete_pr'),
-    path('multistepformexample', views.multistepformexample, name='multistepformexample'),
-    path('multistepformexample_save', views.multistepformexample_save, name='multistepformexample_save'), #path("multipleupload",views.multipleUpload),
+    #path('multistepformexample', views.multistepformexample, name='multistepformexample'),
+    #path('multistepformexample_save', views.multistepformexample_save, name='multistepformexample_save'), #path("multipleupload",views.multipleUpload),
     #path("multipleupload_save",views.multipleupload_save),
 
 
