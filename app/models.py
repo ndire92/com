@@ -3,30 +3,65 @@ from unicodedata import name
 from venv import create
 from django.db import models
 from ckeditor.fields import RichTextField
-# Create your models here.
-from django.db import models
-from django.contrib.auth.models import AbstractUser
+from datetime import timedelta
+from django.urls import reverse_lazy
+from django.utils import timezone
+from django.contrib.auth.models import User
 
 
-class CustomUser(AbstractUser):
-    USER = (
-        (1, 'agriculture'),
-        (2, 'foncier'),
-        (3, 'peche'),
-        (4, 'education'),
-        (5, 'sante'),
 
-    )
 
-    user_type = models.CharField(choices=USER, max_length=50, default=1)
-    profile_pic = models.ImageField(upload_to='media/profile_pic')
-    
+
+
 class Post(models.Model):
-    #admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=300)
     content = RichTextField(blank=True)
     image = models.ImageField(upload_to='media/images/')
-    user =  models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user
 
 
+class Slider(models.Model):
+    title = models.CharField(max_length=300)
+    image = models.ImageField(upload_to='media/images/')
+
+    sub_title = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.title
+
+
+class Ressource(models.Model):
+    title = models.CharField(max_length=300)
+    mot_cle = RichTextField(blank=True)
+    date_en = models.DateField(default=timezone.now)
+    action = models.FileField(upload_to='uploads/')
+    date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone_number = models.IntegerField()
+    address = models.CharField(max_length=100, blank=True)
+    description = models.TextField(blank=True)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
+    reset_password_token = models.CharField(max_length=40, blank=True)
+
+    def __str__(self):
+        return self.user.username
+
+    def get_absolute_url(self):
+        return reverse_lazy('edit', args=[str(self.id)])
+
+
+class Visitor(models.Model):
+    ip_address = models.CharField(max_length=50)
+    last_visit = models.DateTimeField(auto_now=True)
 

@@ -10,7 +10,7 @@ from django.http import HttpResponseRedirect
 from das.dimagrocul import DimAgrocultf
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from app.models import CustomUser
+
 from django.contrib import messages
 
 
