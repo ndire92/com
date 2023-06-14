@@ -11,13 +11,17 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import authenticate, logout, login
-from app.models import Post, Ressource, UserProfile,Visitor
+from app.models import Post, Ressource, UserProfile
 from django.contrib.auth import login
 from django.contrib import messages
-from app.forms import SignUpForm, UserProfileForm
+from django.contrib import sessions
+from app.forms import SignUpForm, ProfileForm
 from app.ressource import Ressou
 from app.forms import PostForm
-from das.models import DimAgroAssurance, DimAgroCommercial, DimAgroCulture, DimAgroFinance, DimAgroOrganisation, DimAgroProduction,Visiteur
+from das.models import DimAgroAssurance, DimAgroCommercial, DimAgroCulture, DimAgroFinance, DimAgroOrganisation, DimAgroProduction
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 def Base(request):
@@ -32,9 +36,16 @@ def Accueil(request):
     datafin = DimAgroFinance.objects.all().count()
     dataorg = DimAgroOrganisation.objects.all().count()
     dataprod = DimAgroProduction.objects.all().count()
-    nb_visite = Visiteur.objects.all().count()
+    # Vérifie si la clé 'visits' existe dans la session
+    if 'visits' not in request.session:
+        # Si elle n'existe pas, initialise à 0
+        request.session['visits'] = 0
 
+    # Incrémente le nombre de visites
+    request.session['visits'] += 1
 
+    # Le reste de votre code pour la vue de la page d'accueil
+    # ...
 
     context = {
         'dataassu': dataassu,
@@ -43,48 +54,67 @@ def Accueil(request):
         'datafin': datafin,
         'dataorg': dataorg,
         'dataprod': dataprod,
-        'nb_visite': nb_visite,
+
 
 
     }
     return render(request, 'pages/accueil.html', context)
-    
 
 
 def register(request):
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save()
+        fs = SignUpForm(request.POST)
+        if fs.is_valid():
+            user = fs.save()
             user.refresh_from_db()
-            user.email = form.cleaned_data.get('email')
+            user.email = fs.cleaned_data.get('email')
             user.save()
-            raw_password = form.cleaned_data.get('password1')
+            raw_password = fs.cleaned_data.get('password1')
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
             return redirect('login')
     else:
-        form = SignUpForm()
-    return render(request, 'pages/register.html', {'form': form})
+        fs = SignUpForm()
+    return render(request, 'pages/register.html', {'fs': fs})
 
 
 def user_login(request):
-    if request.method == 'POST':
+
+    if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')
+            if user.is_gestionnaire:
+                return redirect('home')
+
+            elif user.is_decideur:
+                return redirect('decideur')
+
+            else:
+                return redirect('visiteur')
         else:
-            messages.error(request, 'Invalid username or password')
-    form = AuthenticationForm()
-    return render(request, 'pages/login.html', context={"form": form})
+            error = ' passwoerd ou username'
+    return render(request, 'pages/login.html')
 
 
 def user_logout(request):
     logout(request)
     return redirect('/')
+
+
+def coord(request):
+    return render(request, 'pages/coordonateur.html')
+
+
+def deci(request):
+    return render(request, 'pages/decideur.html')
+
+
+def visit(request):
+    return render(request, 'pages/visiteur.html')
+# end login
 
 
 def peche(request):
@@ -256,143 +286,74 @@ def del_ress(request, id):
     return render(request, 'pa/delete.html')
 
 
+# start profile
 @login_required(login_url='/login/')
-def user_table(request):
-    users = UserProfile.objects.select_related('user').all()
-
-    user_list = []
-    for user in users:
-        user_dict = {}
-        user_dict['id'] = user.user.id
-        user_dict['username'] = user.user.username
-        user_dict['email'] = user.user.email
-        user_dict['first_name'] = user.user.first_name
-        user_dict['last_name'] = user.user.last_name
-
-        user_dict['profile_picture'] = user.profile_picture.url
-        user_dict['description'] = user.description
-        user_dict['phone_number'] = user.phone_number
-        user_dict['address'] = user.address
-
-        # Vérifier si le mot de passe est correct
-        password_is_correct = check_password('password', user.user.password)
-
-        user_dict['password_is_correct'] = password_is_correct
-
-        user_list.append(user_dict)
-
-        print(user_dict['id'], user_dict['username'], user_dict['profile_picture'],
-              user_dict['description'], user_dict['phone_number'], user_dict['address'])
-
-    context = {'user_list': user_list}
-    return render(request, 'pages/user_table.html', context)
+def create_profile(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            user_profile = form.save(commit=False)
+            user_profile.user = request.user
+            user_profile.save()
+            return redirect('profile_detail')
+    else:
+        form = ProfileForm()
+    return render(request, 'pages/create_profile.html', {'form': form})
 
 
 @login_required(login_url='/login/')
-def user_edit(request, id):
-    user_profile = get_object_or_404(UserProfile, id=id)
-
-    # Check if the user is trying to edit his/her own profile
-    if request.user != user_profile.user:
-        messages.error(request, 'You are not authorized to edit this profile.')
-        return redirect('all')
+def update_profile(request):
+    user_profile = request.user.userprofile
 
     if request.method == 'POST':
-        user = user_profile.user
-        new_username = request.POST.get('username')
+        form = ProfileForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            user_profile = form.save(commit=False)
+            user_profile.user = request.user
+            user_profile.save()
+            return redirect('profile_detail')
+    else:
+        form = ProfileForm(instance=user_profile)
 
-        # check if the new username already exists
-        try:
-            User.objects.exclude(id=user.id).get(username=new_username)
-            error_message = 'This username is already taken. Please choose a different one.'
-            return render(request, 'pages/user_edit.html', {'user_profile': user_profile, 'error_message': error_message})
-        except User.DoesNotExist:
-            pass
-
-        user.username = new_username
-        user.email = request.POST.get('email')
-        user.first_name = request.POST.get('first_name')
-        user.last_name = request.POST.get('last_name')
-
-        new_password1 = request.POST.get('password1')
-        new_password2 = request.POST.get('password2')
-
-        if new_password1 and new_password2:
-            if new_password1 == new_password2:
-                user.set_password(new_password1)
-            else:
-                error_message = 'Passwords do not match.'
-                return render(request, 'pages/user_edit.html', {'user_profile': user_profile, 'error_message': error_message})
-
-        user.save()
-
-        user_profile.phone_number = request.POST.get('phone_number')
-        user_profile.address = request.POST.get('address')
-        user_profile.description = request.POST.get('description')
-
-        if request.FILES.get('profile_picture'):
-            user_profile.profile_picture = request.FILES.get('profile_picture')
-
-        user_profile.save()
-
-        messages.success(request, 'Profile updated successfully.')
-
-        return redirect('all')
-
-    context = {'user_profile': user_profile}
-    if request.user.is_authenticated and request.user == user_profile.user:
-        context['success'] = True
-    return render(request, 'pages/user_edit.html', context)
+    return render(request, 'pages/update_profile.html', {'form': form})
 
 
 @login_required(login_url='/login/')
-def delete_user(request, id):
-    user_profile = get_object_or_404(UserProfile, id=id)
-
-    # Check if the user is trying to delete his/her own profile
-    if request.user != user_profile.user:
-        messages.error(
-            request, 'You are not authorized to delete this profile.')
-        return redirect('all')
-
+def delete_profile(request):
+    user_profile = request.user.userprofile
     if request.method == 'POST':
         user_profile.delete()
-        messages.success(request, 'Profile deleted successfully.')
-        return redirect('all')
-
-    context = {'user_profile': user_profile}
-    return render(request, 'pages/user_delete.html', context)
+        return redirect('/')  # Replace 'home' with the appropriate URL
+    return render(request, 'pages/delete_profile.html', {'user_profile': user_profile})
 
 
 @login_required(login_url='/login/')
-def ajout_profile(request):
-    user = request.user
-
-    if request.method == 'POST':
-        form = UserProfileForm(request.POST, request.FILES)
-        if form.is_valid():
-            profile = form.save(commit=False)
-            profile.user = user
-            profile.save()
-            return redirect('home')
-    else:
-        form = UserProfileForm()
-
-    context = {'form': form}
-    return render(request, 'pages/add_profile.html', context)
+def profile_detail(request):
+    user_profile = request.user.userprofile
+    return render(request, 'pages/profile_detail.html', {'user_profile': user_profile})
 
 
+@login_required(login_url='/login/')
+def profile_list(request):
+    profiles = UserProfile.objects.all()
+    return render(request, 'pages/profile_list.html', {'profiles': profiles})
+
+# end profile
 
 
 def agriculture(request):
 
     return render(request, 'pa/agriculture.html')
 
-def co(request):
-    
+
+def commune(request):
+
     return render(request, 'pa/commune.html')
 
 
+def co(request):
+
+    return render(request, 'pa/commune_detail.html')
 
 
 # @login_required(login_url='/')
@@ -403,7 +364,6 @@ def Hme(request):
     datafin = DimAgroFinance.objects.all().count()
     dataorg = DimAgroOrganisation.objects.all().count()
     dataprod = DimAgroProduction.objects.all().count()
-    nb_visite = Visiteur.objects.all().count()
 
     context = {
         'dataassu': dataassu,
@@ -412,38 +372,6 @@ def Hme(request):
         'datafin': datafin,
         'dataorg': dataorg,
         'dataprod': dataprod,
-        'nb_visite': nb_visite,
+
     }
     return render(request, 'pages/accueil.html', context)
-
-def he(request):
-   # Incrémente le nombre de visites dans la session
-    request.session['visits'] = request.session.get('visits', 0) + 1
-
-    # Récupère le nombre total de visites depuis la session
-    total_visits = request.session['visits']
-
-    # Récupère l'adresse IP du visiteur
-    ip_address = request.META.get('REMOTE_ADDR')
-
-    # Vérifie si le visiteur existe déjà dans la base de données
-    visitor = Visitor.objects.filter(ip_address=ip_address).first()
-
-    if visitor:
-        # Met à jour la date de dernière visite du visiteur existant
-        visitor.last_visit = timezone.now()
-        visitor.save()
-    else:
-        # Ajoute un nouveau visiteur à la base de données
-        visitor = Visitor(ip_address=ip_address)
-        visitor.save()
-
-    # Compte le nombre de visiteurs uniques
-    unique_visitors = Visitor.objects.count()
-
-    # Affiche le nombre total de visites et de visiteurs uniques sur la page
-    return render(request, 'pages/accueil.html', {'total_visits': total_visits, 'unique_visitors': unique_visitors})
-
-
-
-

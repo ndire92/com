@@ -1,4 +1,5 @@
 {% extends 'layout/base.html' %}
+
 {% load static %}
 
 
@@ -11,90 +12,19 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </header>
 
-    <div class="body container">
+    <div class="body container mt-15">
     {% block body  %}
-<div class="carouse">
-	<div class="carousel-inner">
-
-		<div class="carousel-item active">
-			<img src="{% static '/imge/jF.jpg ' %}" class="d-block w-100" style="max-height: 500px;" alt="...">
-
-		</div>
-	</div>
-
-	<div class="info-com">
-		<div class="row">
-			<div class="col-sm-4 col1">
-				<div class="img">
-					<img src="{% static '/imge/logo_thies.png'%}" alt="logo" width="300" height="300">
-				</div>
-				<div>
-
-				</div>
-			</div>
-			<div class="col-sm-8 col2"  style="background-color:#579c5d">
-				<div class="info-flottan-text" style="color: #fff">
-					<div class="info-flottan-text-title">
-						<h5 class="" >Commune Thies</h5>
-					</div>
-
-					<p align="">Cette plateforme met ensemble des données clés et informations essentielles sur les différents axes prioritaires de développement au niveau de la commune de <b>THIES </b> à savoir l ' agriculture </a> </p>
-				</div>
-
-				<div class="out-indic mx-auto">
-					<div class="row my-3 mx-auto"><div class="col-6 col-indic"><a href="{% url 'agriculture' %}"class="btn btn-outline-success" ><img src="{% static '/imge/iconsagri.png'%}" alt="logo" width="50" height="50"> Agriculture</a></div>
-					</div>
-					<div class="row my-1 mx-auto">
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</div>
-</div>
-
-<div class="shadow-lg p-3 mb-5 bg-body rounded mt-5 container">
-    <div class=" px-4 my-5 row row-cols-sm-12">
-        <div class="jumbotron text-center">
-            <div style="display: flex; width: 100%; height: 100%; color:#579c5d">
-                <h2>Commune de Thies<span> </span></h2></div></div><div class="col-sm-6">
-                    <p class="para" style="font-size: 18px">
-                      Thiès est située à 70 km de la capitale Dakar. Elle s’étend sur une superficie de 6 601 km²,
-soit 3,4% du territoire national. La ville de Thiès a un potentiel économique important. Elle
-bénéficie de sa position géographique par rapport à la capital Dakar et constitue un
-carrefour pour regagner les autres régions du Sénégal. La région abrite des secteurs
-d’activités économiques dynamiques comme l’agriculture avec des cultures maraichères,
-arboricoles et pluviales, l’élevage, la pêche, l’industrie, les mines, l’artisanat et le commerce.
-Thiès fut un village sérère du royaume de Cayor, créé au XVIIème siècle, appelé Dianxène. La
-commune a été créée en 1904 par les colonisateurs français. Léopold Sédar Senghor, célèbre
-poète et premier Président du Sénégal fut le premier maire de Thiès.
-L’activité ferroviaire est très liée à l’histoire de Thiès, comme on nomme « la ville aux deux
-gares ».
-Thiès est une zone d’attraction de populations du fait de son essor économique, lié à la
-construction de l’autoroute à péage Dakar-Diamniadio et Ila Touba et l’aéroport de Diass. Il
-abrite l’usine Sen Iran auto de montage de voitures, des mines de phosphates à Taïba et à
-Pallo.  
-Une ville de culture et d’artisanat
-Thiès est une ville jeune et culturellement dynamique. Sa production artistique n’est plus à
-démontrer, tout comme son tissu d’associations. On peut noter l’Association des Artistes
-Plasticiens de Thiès qui disposent pour la plupart de galeries chez l’habitant peu connues des
-populations, et l’Association des Comédiens de Thiès. </p>
-<a href="{% url 'commune' %}" class="btn btn-primary"></i>Savoir Plus</a>
-                    
-</div>
-<div class = "col-sm-6" > <iframe src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d61725.714729414576!2d-16.988465198738865!3d14.777073921861957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec1bfed5270df7f%3A0x155c9c17fe18765e!2sH%C3%B4tel%20de%20ville%20de%20la%20Commune%20de%20Thi%C3%A9s!5e0!3m2!1sfr!2ssn!4v1680701268222!5m2!1sfr!2ssn" width = "600" height = "800" style = "border:0;" allowfullscreen = "" loading = "lazy" referrerpolicy = "no-referrer-when-downgrade" > </iframe > </div > </div > </div >
 
 
     <div>
 		<div class="text-center my-5" style=" color: #258baf">
 
-			<div class="col-sm-12"><div style="width: 100%; height: 100%; display: flex; justify-items: center; margin: 35px;">
+			<div class="col-sm-12">
+				<div style="width: 100%; height: 100%; display: flex; justify-items: center; margin:5px;">
 				<!-- iframe title="Education2" src="https://app.powerbi.com/view?r=eyJrIjoiNjM5ZjE3NzctNmI0Yy00YWVkLWFkMWMtMDJmOWEzZjNhYmU4IiwidCI6ImJmZTY0YzY0LWIwY2UtNDJiZC04MDlhLWE4ODlhMjJhZGQwOSJ9&amp;pageName=ReportSection" allowfullscreen="" width="2000" height="650" frameborder="0">
-				</iframe-->
-	<iframe title="ACCUEIL" width="2000" height="650" src="https://app.powerbi.com/view?r=eyJrIjoiZmJmMjkyYzEtYTk2Yi00OThhLWE1MjEtMTQyMGY3YThmNjNjIiwidCI6ImJmZTY0YzY0LWIwY2UtNDJiZC04MDlhLWE4ODlhMjJhZGQwOSJ9" frameborder="0" allowFullScreen="true"></iframe>
+					</iframe-->
+<iframe title="ACCUEIL" width="2000" height="650" src="https://app.powerbi.com/view?r=eyJrIjoiZmJmMjkyYzEtYTk2Yi00OThhLWE1MjEtMTQyMGY3YThmNjNjIiwidCI6ImJmZTY0YzY0LWIwY2UtNDJiZC04MDlhLWE4ODlhMjJhZGQwOSJ9" frameborder="0" allowFullScreen="true"></iframe>
 </div>
-
-
 
 <!-- JavaScript Libraries -->
 
@@ -118,9 +48,6 @@ populations, et l’Association des Comédiens de Thiès. </p>
 
 </div>
 <div class="col">
-
-
-
 
 
 

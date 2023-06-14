@@ -2,8 +2,10 @@
 from django import forms
 from .models import Post, UserProfile
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from django.contrib import messages
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()
 
 
 class SignUpForm(UserCreationForm):
@@ -25,12 +27,15 @@ class SignUpForm(UserCreationForm):
         fields = ('username', 'first_name', 'last_name',
                   'email', 'password1', 'password2')
 
-    def save(self, commit=True):
-        user = super(SignUpForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
-        if commit:
-            user.save()
-            return user
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+
+        # Vérifier si le nouveau nom d'utilisateur est unique
+        if User.objects.filter(username=username).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError(
+                'Le nom d\'utilisateur existe déjà. Veuillez en choisir un autre.')
+
+        return username
 
 
 class PostForm(forms.ModelForm):
@@ -46,20 +51,27 @@ class PostForm(forms.ModelForm):
         fields = ('title', 'content', 'image')
 
 
-class UserProfileForm(forms.ModelForm):
-    description = forms.CharField(label='Code Commune', widget=forms.TextInput(
+class ProfileForm(forms.ModelForm):
+    first_name = forms.CharField(label='Prénom', widget=forms.TextInput(
         attrs={'placeholder': ' ', 'style': 'width: 800px;', 'class': 'form-control'}))
-    phone_number = forms.CharField(label='Code Commune', widget=forms.NumberInput(
+    last_name = forms.CharField(label='Nom', widget=forms.TextInput(
         attrs={'placeholder': ' ', 'style': 'width: 800px;', 'class': 'form-control'}))
-    address = forms.CharField(label='Code Commune', widget=forms.TextInput(
+    email = forms.EmailField(label='Email', widget=forms.EmailInput(
+        attrs={'placeholder': ' ', 'style': 'width: 800px;', 'class': 'form-control'}))
+    description = forms.CharField(label='description', widget=forms.TextInput(
+        attrs={'placeholder': ' ', 'style': 'width: 800px;', 'class': 'form-control'}))
+    phone_number = forms.CharField(label='Tel', widget=forms.NumberInput(
+        attrs={'placeholder': ' ', 'style': 'width: 800px;', 'class': 'form-control'}))
+    address = forms.CharField(label='address', widget=forms.TextInput(
         attrs={'placeholder': ' ', 'style': 'width: 800px;', 'class': 'form-control'}))
 
     class Meta:
         model = UserProfile
-        fields = ['description', 'phone_number', 'address', 'profile_picture']
+        fields = ['first_name', 'last_name', 'email', 'description',
+                  'phone_number', 'address', 'profile_picture']
 
     def save(self, commit=True, user=None):
-        profile = super(UserProfileForm, self).save(commit=False)
+        profile = super(ProfileForm, self).save(commit=False)
         profile.user = user
         if commit:
             profile.save()

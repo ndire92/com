@@ -48,6 +48,7 @@
 <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
 <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
 <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">   
+<script src="/node_modules/leaflet/dist/leaflet.js"></script>
 
   <!-- Template Main CSS File -->
   <link href="{% static 'as/css/style.css '%}" rel="stylesheet">
@@ -68,18 +69,15 @@
 
 <script src="{% static 'assets/plugins/datatables/datatables.min.js'%}"></script>
 <script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#table_id').dataTable();
-    });
-</script>
+
   
 </script>
 <style>
 body{
 	background: #fafafa;
   color: #333333;
-  margin-top: 0rem;
+  margin-top: 10rem;
+
 
 }
 </style>
@@ -100,7 +98,7 @@ body{
 
 
 
-    {% block body %} margin-top: 0rem;
+    {% block body %} 
   
     {% endblock %}
 
